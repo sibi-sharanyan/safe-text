@@ -1,0 +1,37 @@
+<% include partials/header %>
+
+<h1>Welcome to safetext - The ultra secure mode to communicate with your friends! </h1>
+
+
+
+
+
+
+<% if(user1) {  %>
+<h1> You are logged in as
+   <strong> <%= user1.username %> </strong>    </h1>
+   <h1> <a href="/logout">  logout </a>  </h1> 
+   <h1>Select a user you wish to send a message to!</h1>
+  
+<% users.forEach(function(user) { if(user.username != user1.username) { %>
+   <h1> Username : <a href="/convo/<%= user.id %>/<%= user1.id %>">  <%= user.username %>  </a></h1>
+<% }}) %>
+
+<% } else { %>
+<h1>New here ? sign up to start using ! <a href="/register">register</a> </h1>
+
+<h1>Already a user ? Login now! <a href="/login">login </a></h1>
+<% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+<% include partials/footer %>

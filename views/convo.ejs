@@ -1,0 +1,40 @@
+<% include partials/header %>
+
+<div class="container">
+
+ <% if(msg) { %>
+   <% msg.forEach(function(message) { %>
+    <div class="jumbotron"> <h2> <%= message.content %> </h2>
+      <p> <%= message.date %>  </p>
+      </div>
+  <% }) %>
+  <% } %>
+ 
+<h2>Enter the message and hit submit</h2>
+  <form method="POST" action="/convo">
+
+    <input type="hidden" name = "to" value="<%= rec %>" readonly>
+    <textarea class="form-control" rows="5" name="submission" ></textarea>
+    <button type="submit" class="btn btn-primary ">Submit</button> 
+  </form>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include partials/footer %>
