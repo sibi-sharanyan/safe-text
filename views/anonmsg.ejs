@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+
+
+
+<% if(msg.length > 0) { %>
+  <h1>Below is the list of your anonymous messages!</h1>
+  <% msg.forEach(function(message) { %>
+   <div class="jumbotron"> <h2> <%= message.content %> </h2>
+     <p> <%= message.date %>  </p>
+     </div>
+ <% }) %>
+ <% } else {  %>
+<h1>Sorry! You don't have any anonymous messages at the moment! Check back later!</h1>
+ <% } %>
+
+
+<% include partials/footer %>

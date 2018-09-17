@@ -10,18 +10,35 @@
 <% if(user1) {  %>
 <h1> You are logged in as
    <strong> <%= user1.username %> </strong>    </h1>
-   <h1> <a href="/logout">  logout </a>  </h1> 
-   <h1>Select a user you wish to send a message to!</h1>
+   <h1><a href="/convo/anon/<%= user1.id %>">Anonymous messages inbox </a></h1>
+   <h1> <a href="/logout">  logout </a>  </h1>  
+   <% if(anon) {  %>
+    <h1>You are now logged in as <strong> anonymous </strong> . The recipients of your message won't be able to see your name</h1> <h1><a href="/home">Exit Anonymous State</a></h1>
+    <h1>Select a user you wish to send a message to as anonymous!</h1>
+    <% users.forEach(function(user) { if(user.username != user1.username) { %>
+     <h1> Username : <a href="/convo/<%= user.id %>/anon">  <%= user.username %>  </a></h1>
+  <% }}) %>
+  <% } else{   %> 
+       <h1> <a href="/home/anon"> Become Anonymous!</a></h1>  
+       <h1>Select a user you wish to send a message to!</h1>
+       <% users.forEach(function(user) { if(user.username != user1.username) { %>
+        <h1> Username : <a href="/convo/<%= user.id %>/<%= user1.id %>">  <%= user.username %>  </a></h1>
+     <% }}) %>
+  <% } %>
+
+
+   <% } else { %>
+
+  <h1>New here ? sign up to start using ! <a href="/register">register</a> </h1>
   
-<% users.forEach(function(user) { if(user.username != user1.username) { %>
-   <h1> Username : <a href="/convo/<%= user.id %>/<%= user1.id %>">  <%= user.username %>  </a></h1>
-<% }}) %>
+  <h1>Already a user ? Login now! <a href="/login">login </a></h1>
+  <% } %>
 
-<% } else { %>
-<h1>New here ? sign up to start using ! <a href="/register">register</a> </h1>
+   
+  
 
-<h1>Already a user ? Login now! <a href="/login">login </a></h1>
-<% } %>
+
+
 
 
 

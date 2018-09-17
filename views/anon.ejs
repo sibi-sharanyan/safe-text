@@ -1,29 +1,15 @@
 <% include partials/header %>
+<h1>You're about to send an anonymous message to <%= rec %></h1>
 
-<div class="container">
+<br>
 
- <% if(msg) { %>
-   <% msg.forEach(function(message) { %>
-    <div class="jumbotron"> <h2> <%= message.content %> </h2>
-      <p> <%= message.date %>  </p>
-      </div>
-  <% }) %>
-  <% } %>
- 
 <h2>Enter the message and hit submit</h2>
-  <form method="POST" action="/convo">
+  <form method="POST" action="/anon">
 
     <input type="hidden" name = "to" value="<%= rec %>" readonly>
     <textarea class="form-control" rows="5" name="submission" ></textarea>
     <button type="submit" class="btn btn-primary ">Submit</button> 
   </form>
-
-
-
-</div>
-
-
-
 
 
 

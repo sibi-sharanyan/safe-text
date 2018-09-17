@@ -43,6 +43,23 @@ app.get("/", function(req, res) {
   res.redirect("/home"   );
 });
 
+//The anonymous home page
+app.get("/home/anon", function(req, res) {
+  user.find({} , function(err , user) 
+  {
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      console.log(req.user);
+      res.render("home" , {user1: req.user ,  users : user , anon: true  });
+    }
+  })
+  
+});
+
 //The homepage for the user
 app.get("/home", function(req, res) {
   user.find({} , function(err , user) 
@@ -54,11 +71,53 @@ app.get("/home", function(req, res) {
     else
     {
       console.log(req.user);
-      res.render("home" , {user1: req.user ,  users : user  });
+      res.render("home" , {user1: req.user ,  users : user , anon:false  });
     }
   })
   
 });
+
+//Display form Send anonymous message to a user
+app.get("/convo/:id1/anon", isLoggedIn ,  function(req , res) {
+  console.log(req.params.id1);
+  console.log(req.params.id2);
+  res.render("anon.ejs" , {rec : req.params.id1  } );
+  
+});
+
+//Post anonymous message to the database
+app.post("/anon" , isLoggedIn , function(req , res)
+{ 
+message.create({content : req.body.submission  ,  to : req.body.to   } , function(err ,msg) {
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        console.log(msg);
+        res.redirect("/home/anon");
+      }
+  })
+}
+)
+
+//Page for Reciever to see the anonymous messages he/she has recieved
+app.get("/convo/anon/:id1", isLoggedIn ,  function(req , res) {
+  // console.log(req.params.id1);
+  // console.log(req.params.id2);
+  message.find({from: undefined , to: req.params.id1   } , function(err , msg) 
+  {
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        res.render("anonmsg.ejs" , {rec : req.params.id1 , msg: msg  } );
+
+      }
+  } )
+});
+
 
 //Display The conversation and form to send a message to a particular user 
 app.get("/convo/:id1/:id2", isLoggedIn ,  function(req , res) {
@@ -78,13 +137,13 @@ app.get("/convo/:id1/:id2", isLoggedIn ,  function(req , res) {
   
 });
 
+
+
+
 //Post The message to the database
 app.post("/convo" , isLoggedIn , function(req , res)
-{
-  // console.log(req.user);
-  
-  
-  message.create({content : req.body.submission , from : req.user.id , to : req.body.to   } , function(err ,msg) {
+{ 
+message.create({content : req.body.submission , from : req.user.id , to : req.body.to   } , function(err ,msg) {
       if(err)
       {
         console.log(err);
